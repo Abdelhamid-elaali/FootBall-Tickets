@@ -7,6 +7,7 @@ use App\Http\Controllers\MatchController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BookingController;
+use App\Http\Controllers\Admin\MatchController as AdminMatchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\SuperAdminMiddleware;
@@ -36,27 +37,27 @@ Route::post('/logout', function () {
 })->name('logout')->middleware('auth');
 
 // Admin routes
-Route::middleware(['web', 'auth', AdminMiddleware::class])->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::prefix('admin')->group(function () {
-        Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+        Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+        Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
         
         // Matches routes
-        Route::resource('matches', \App\Http\Controllers\Admin\MatchController::class)
-            ->names([
-                'index' => 'admin.matches.index',
-                'create' => 'admin.matches.create',
-                'store' => 'admin.matches.store',
-                'show' => 'admin.matches.show',
-                'edit' => 'admin.matches.edit',
-                'update' => 'admin.matches.update',
-                'destroy' => 'admin.matches.destroy',
-            ]);
+        Route::resource('matches', App\Http\Controllers\Admin\MatchController::class)->names([
+            'index' => 'admin.matches.index',
+            'create' => 'admin.matches.create',
+            'store' => 'admin.matches.store',
+            'show' => 'admin.matches.show',
+            'edit' => 'admin.matches.edit',
+            'update' => 'admin.matches.update',
+            'destroy' => 'admin.matches.destroy',
+        ]);
 
-        // Bookings routes
-        Route::get('/bookings', [BookingController::class, 'index'])->name('admin.bookings');
+        // Bookings routes - view only
+        Route::get('/bookings', [App\Http\Controllers\Admin\BookingController::class, 'index'])->name('admin.bookings.index');
         
-        // Users routes - accessible by both admin and super admin
-        Route::resource('users', UserController::class)->names([
+        // Users routes
+        Route::resource('users', App\Http\Controllers\Admin\UserController::class)->names([
             'index' => 'admin.users.index',
             'create' => 'admin.users.create',
             'store' => 'admin.users.store',
@@ -64,10 +65,8 @@ Route::middleware(['web', 'auth', AdminMiddleware::class])->group(function () {
             'edit' => 'admin.users.edit',
             'update' => 'admin.users.update',
             'destroy' => 'admin.users.destroy',
-        ])->except(['show']); // Remove show from this group
-
-        // User show route - separate to allow proper access control
-        Route::get('users/{user}', [UserController::class, 'show'])->name('admin.users.show');
+        ])->except(['show']);
+        Route::get('users/{user}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('admin.users.show');
     });
 });
 

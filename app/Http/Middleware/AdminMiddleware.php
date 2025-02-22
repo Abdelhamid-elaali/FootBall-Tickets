@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
@@ -16,14 +15,10 @@ class AdminMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
-
-        if (!Auth::user()->isAdmin() && !Auth::user()->isSuperAdmin()) {
-            abort(403, 'Unauthorized action.');
+        if (!auth()->check() || !auth()->user()->isAdmin()) {
+            return redirect()->route('home')->with('error', 'Unauthorized access. Admin privileges required.');
         }
 
         return $next($request);

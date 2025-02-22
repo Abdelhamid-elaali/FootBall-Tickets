@@ -80,13 +80,20 @@
 
                                     @push('scripts')
                                     <script>
-                                        const ticketPrice = {{ $match->ticket_price }};
-                                        const quantitySelect = document.getElementById('quantity');
-                                        const totalPriceSpan = document.getElementById('totalPrice');
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const ticketPrice = {{ $match->ticket_price }};
+                                            const quantitySelect = document.getElementById('quantity');
+                                            const totalPriceSpan = document.getElementById('totalPrice');
 
-                                        quantitySelect.addEventListener('change', function() {
-                                            const total = (this.value * ticketPrice).toFixed(2);
-                                            totalPriceSpan.textContent = total;
+                                            function updateTotalPrice() {
+                                                const quantity = parseInt(quantitySelect.value);
+                                                const total = (quantity * ticketPrice).toFixed(2);
+                                                totalPriceSpan.textContent = total;
+                                            }
+
+                                            quantitySelect.addEventListener('change', updateTotalPrice);
+                                            // Initialize total price
+                                            updateTotalPrice();
                                         });
                                     </script>
                                     @endpush

@@ -1,17 +1,17 @@
 <nav x-data="{ open: false }" class="bg-green-600">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div class="flex justify-between h-16 w-full">
+            <div class="flex w-full">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
+                <div class="shrink-0 flex items-center w-full">
                     <a href="{{ route('home') }}" class="text-white font-bold text-xl">
                         FootballTix
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex w-full">
                     <a href="{{ route('home') }}" class="text-white hover:text-green-100 inline-flex items-center px-1 pt-1 text-sm font-medium">
                         Home
                     </a>
