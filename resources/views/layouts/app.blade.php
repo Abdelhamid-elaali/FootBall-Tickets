@@ -14,7 +14,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased h-full">
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-green-600 border-b border-green-500 w-full">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,7 +53,7 @@
                                 <div class="flex items-center">
                                     <div class="relative" x-data="{ open: false }" @click.away="open = false" @close.stop="open = false">
                                         <div>
-                                            <button type="button" @click="open = !open" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white hover:text-white/80 focus:outline-none transition ease-in-out duration-150 gap-x-2">
+                                            <button type="button" @click="open = !open" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white hover:text-white/80 focus:outline-none transition ease-in-out duration-150 gap-x-2" id="user-menu-button">
                                                 <img class="h-8 w-8 rounded-full object-cover" src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}" alt="{{ auth()->user()->name }}">
                                                 <span>{{ auth()->user()->name }}</span>
                                                 <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -69,7 +69,7 @@
                                              x-transition:leave="transition ease-in duration-75"
                                              x-transition:leave-start="transform opacity-100 scale-100"
                                              x-transition:leave-end="transform opacity-0 scale-95"
-                                             class="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                             class="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" id="dropdown-menu"
                                              role="menu"
                                              aria-orientation="vertical"
                                              aria-labelledby="user-menu-button"
@@ -178,5 +178,22 @@
                 {{ $slot }}
             </main>
         </div>
+
+        <!-- Dropdown Script -->
+        <script>
+            function toggleDropdown() {
+                const dropdown = document.getElementById('dropdown-menu');
+                dropdown.classList.toggle('hidden');
+            }
+
+            // Close dropdown when clicking outside
+            window.addEventListener('click', function(e) {
+                const dropdown = document.getElementById('dropdown-menu');
+                const button = document.getElementById('user-menu-button');
+                if (!button.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.add('hidden');
+                }
+            });
+        </script>
     </body>
 </html>
