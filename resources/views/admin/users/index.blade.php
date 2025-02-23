@@ -6,7 +6,10 @@
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-2xl font-bold">Users Management</h2>
                         @if(Auth::user()->isSuperAdmin() || Auth::user()->isAdmin())
-                            <a href="{{ route('admin.users.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            <a href="{{ route('admin.users.create') }}" class="inline-flex items-center bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                </svg>
                                 Add New User
                             </a>
                         @endif

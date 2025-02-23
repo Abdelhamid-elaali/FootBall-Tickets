@@ -88,15 +88,15 @@
                                 </div>
                             @else
                                 <div class="flex items-center space-x-4">
-                                    <a href="{{ route('login') }}" 
-                                       class="inline-flex items-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md hover:bg-green-500 hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
-                                        Login
-                                    </a>
+                                <a href="{{ route('login') }}" 
+                                   class="inline-flex items-center px-6 py-3 text-sm font-semibold text-white bg-green-600 border border-transparent rounded-lg shadow-sm hover:bg-green-700 hover:shadow-md transition-all duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                                    Login
+                                </a>
                                     @if (Route::has('register'))
-                                        <a href="{{ route('register') }}" 
-                                           class="inline-flex items-center px-4 py-2 text-sm font-medium text-green-600 bg-white border border-transparent rounded-md hover:bg-green-50 hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
-                                            Register
-                                        </a>
+                                    <a href="{{ route('register') }}" 
+                                   class="inline-flex items-center px-6 py-3 text-sm font-semibold text-green-700 bg-white border border-green-300 rounded-lg shadow-sm hover:bg-gray-50 hover:shadow-md transition-all duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                                    Register
+                                </a>
                                     @endif
                                 </div>
                             @endauth

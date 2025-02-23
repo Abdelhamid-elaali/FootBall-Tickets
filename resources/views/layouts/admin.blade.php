@@ -20,9 +20,12 @@
             <!-- Sidebar -->
             <div class="hidden md:flex md:flex-shrink-0">
                 <div class="flex flex-col w-64">
-                    <div class="flex flex-col flex-grow py-2.5 overflow-y-auto bg-green-700 border-r">
-                        <div class="flex flex-col flex-shrink-0 px-4">
-                            <a href="{{ route('admin.dashboard') }}" class="text-lg font-semibold tracking-tighter text-white focus:outline-none focus:ring">
+                    <div class="flex flex-col flex-grow py-4 overflow-y-auto bg-black border-r">
+                        <div class="flex flex-col flex-shrink-0 px-4 pb-4">
+                            <a href="{{ route('admin.dashboard') }}" class="group flex items-center text-lg font-semibold tracking-tighter text-white focus:outline-none focus:ring">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
+                            </svg>
                                 FootballTix
                             </a>
                         </div>
@@ -34,7 +37,7 @@
                             Home
                         </a>
 
-                        <nav class="flex-1 space-y-1 mt-8">
+                        <nav class="flex-1 space-y-1 mt-2">
                             <a href="{{ route('admin.dashboard') }}" class="flex items-center px-4 py-2.5 text-sm font-medium transition-colors duration-150 {{ request()->routeIs('admin.dashboard') ? 'text-white bg-green-800' : 'text-green-100 hover:bg-green-800' }} rounded-lg">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -64,14 +67,14 @@
                             </a>
                         </nav>
 
-                        <div class="flex flex-shrink-0 px-4 py-1 border-t border-green-800">
+                        <div class="flex flex-shrink-0 px-4 py-1 border-t-4 border-green-800">
                             <div class="flex items-center">
                                 <div class="flex-shrink-0">
                                     <img class="w-8 h-8 rounded-full" src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}" alt="{{ auth()->user()->name }}">
                                 </div>
                                 <div class="ml-4">
                                     <p class="text-sm font-medium text-white">{{ auth()->user()->name }}</p>
-                                    <p class="text-xs text-green-200">{{ ucfirst(auth()->user()->role) }}</p>
+                                    <p class="text-xs text-green-400">{{ ucfirst(auth()->user()->role) }}</p>
                                     <form method="POST" action="{{ route('logout') }}" class="mt-1">
                                         @csrf
                                         <button type="submit" class="text-xs text-green-200 hover:text-white">

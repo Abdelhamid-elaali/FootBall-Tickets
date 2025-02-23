@@ -15,14 +15,40 @@
                         Home
                     </a>
                     @auth
+                        <a href="{{ route('matches.index') }}" class="text-white hover:text-green-100 inline-flex items-center px-1 pt-1 text-sm font-medium">
+                            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            Matches
+                        </a>
                         <a href="{{ route('my-tickets') }}" class="text-white hover:text-green-100 inline-flex items-center px-1 pt-1 text-sm font-medium">
+                            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                            </svg>
                             My Tickets
                         </a>
                         @if(Auth::user()->isAdmin())
                             <a href="{{ route('admin.panel') }}" class="text-white hover:text-green-100 inline-flex items-center px-1 pt-1 text-sm font-medium">
+                                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
                                 Admin Panel
                             </a>
                         @endif
+                    @else
+                        <div class="flex items-center">
+                            <span class="text-white/80 text-sm">
+                                <svg class="w-5 h-5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                                Please 
+                                <a href="{{ route('login') }}" class="text-white hover:text-green-100 font-medium">login</a>
+                                or
+                                <a href="{{ route('register') }}" class="text-white hover:text-green-100 font-medium">register</a>
+                                to view matches
+                            </span>
+                        </div>
                     @endauth
                 </div>
             </div>
@@ -56,12 +82,6 @@
                                     <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
                                 </svg>
                                 Profile Settings
-                            </a>
-                            <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
-                                <svg class="mr-3 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-                                </svg>
-                                Help Center
                             </a>
                             <form method="POST" action="{{ route('logout') }}" class="w-full">
                                 @csrf
@@ -100,6 +120,9 @@
                     Home
                 </a>
                 @auth
+                    <a href="{{ route('matches.index') }}" class="text-white hover:text-green-100 block px-3 py-2 text-base font-medium">
+                        Matches
+                    </a>
                     <a href="{{ route('my-tickets') }}" class="text-white hover:text-green-100 block px-3 py-2 text-base font-medium">
                         My Tickets
                     </a>
@@ -108,6 +131,12 @@
                             Admin Panel
                         </a>
                     @endif
+                @else
+                    <div class="px-3 py-2 text-sm text-white/80">
+                        Please <a href="{{ route('login') }}" class="text-white hover:text-green-100 font-medium">login</a>
+                        or <a href="{{ route('register') }}" class="text-white hover:text-green-100 font-medium">register</a>
+                        to view matches
+                    </div>
                 @endauth
             </div>
 
@@ -127,10 +156,6 @@
                     <div class="mt-3 space-y-1">
                         <a href="{{ route('profile.edit') }}" class="text-white hover:text-green-100 block px-3 py-2 text-base font-medium">
                             Profile Settings
-                        </a>
-                        <a href="#" class="text-white hover:text-green-100 block px-3 py-2 text-base font-medium">
-                            Help Center
-                        </a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="w-full text-left text-white hover:text-green-100 block px-3 py-2 text-base font-medium">
