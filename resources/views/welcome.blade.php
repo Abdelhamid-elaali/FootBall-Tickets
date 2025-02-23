@@ -4,11 +4,11 @@
         <div class="relative overflow-hidden">
             <!-- Background Image -->
             <div class="absolute inset-0 z-0">
-                <div class="absolute inset-0 bg-gradient-to-r from-green-600 to-green-800 opacity-90"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-green-400 to-green-800 opacity-95" style="background-image: url('{{ asset('images/bg4.jpg') }}');" ></div>
             </div>
             
             <!-- Content -->
-            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 mt-16 p-4">
                 <div class="text-center">
                     <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight">
                         FootballTix - The Tickets Hub !

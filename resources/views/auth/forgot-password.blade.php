@@ -1,9 +1,8 @@
 <x-guest-layout>
-    <div class="w-full min-h-screen bg-gradient-to-br from-green-600 to-green-800 flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-
+    <div class="min-h-screen flex items-center justify-center h-screen bg-cover bg-center" style="background-image: url('{{ asset('images/bg4.jpg') }}');">
 
         <!-- Main Card -->
-        <div class="w-full max-w-[480px] bg-white rounded-xl shadow-2xl p-8 mx-auto">
+        <div class="w-full max-w-[480px] bg-white rounded-[40px] shadow-2xl p-8 mx-auto">
             <!-- Header with Football Icon -->
             <div class="text-center mb-8">
                 <div class="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4">

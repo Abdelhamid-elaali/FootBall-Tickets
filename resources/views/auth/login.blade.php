@@ -1,15 +1,14 @@
 <x-guest-layout>
-    <div class="min-h-screen flex items-center justify-center bg-green-600">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <div class="min-h-screen flex items-center justify-center h-screen bg-cover bg-center" style="background-image: url('{{ asset('images/bg4.jpg') }}');">
+        <div class="bg-white p-8 rounded-[40px] shadow-lg w-full max-w-md">
             <!-- Logo -->
             <div class="text-center mb-6">
-                <div class="flex justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                <div class="mx-auto w-28 h-28 bg-green-100 rounded-full flex items-center justify-center mb-2.5 text-green-700">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-20 h-20">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                 </svg>
-
-                </div>
-                <h2 class="mt-4 text-2xl font-bold text-gray-900">Welcome Back</h2>
+            </div>
+                <h2 class="mt-4 text-3xl font-bold text-gray-900">Welcome Back</h2>
                 <p class="mt-2 text-sm text-green-600">Sign in to access your account</p>
             </div>
 

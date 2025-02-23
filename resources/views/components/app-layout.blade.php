@@ -16,8 +16,8 @@
     </head>
     <div class="min-h-screen bg-gray-100">
         <!-- Navigation Bar -->
-        <nav class="bg-black border-b border-green-500" x-data="{ open: false }">
-            <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-4">
+        <nav class="fixed w-full top-0 z-50 bg-black border-b border-green-500" x-data="{ open: false }">
+            <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
                     <!-- Logo and Desktop Links -->
                     <div class="flex items-center">
@@ -81,7 +81,7 @@
                         @props(['darkMode' => false])
 
                         <div class="relative " x-data="{ open: false }">
-                            <button @click="open = !open" class="flex items-center space-x-3 hover:bg-opacity-30 hover:bg-white rounded-full p-2.5 focus:outline-none">
+                            <button @click="open = !open" class="flex items-center space-x-3 hover:bg-opacity-85 hover:bg-green-400 rounded-full p-2 focus:outline-none">
                                 <img class="h-8 w-8 rounded-full object-cover border-2 {{ $darkMode ? 'border-gray-600' : 'border-gray-200' }}" 
                                      src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}" 
                                      alt="{{ auth()->user()->name }}">
