@@ -5,35 +5,41 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Ticket;
+use App\Models\TicketType;
 
 class FootballMatch extends Model
 {
     use HasFactory;
 
-    protected $table = 'matches';
+    protected $table = 'football_matches';
 
     protected $fillable = [
         'name',
         'home_team',
         'away_team',
         'match_date',
-        'stadium',
-        'ticket_price',
-        'ticket_type',
-        'available_tickets',
-        'description',
         'match_time',
-        'match_status'
+        'stadium',
+        'stadium_image',
+        'description',
+        'match_status',
+        'ticket_price',
+        'available_tickets',
+        'ticket_type'
     ];
 
     protected $casts = [
         'match_date' => 'datetime',
-        'ticket_price' => 'decimal:2',
-        'match_time' => 'datetime'
+        'match_time' => 'datetime',
     ];
 
     public function tickets()
     {
         return $this->hasMany(Ticket::class, 'match_id');
+    }
+
+    public function ticketTypes()
+    {
+        return $this->hasMany(TicketType::class, 'match_id');
     }
 }

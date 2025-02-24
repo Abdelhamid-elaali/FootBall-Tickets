@@ -8,17 +8,11 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::table('matches', function (Blueprint $table) {
-            $table->string('stadium_image')->nullable()->after('stadium');
-            $table->enum('ticket_type', ['Standard', 'VIP', 'Premium'])->default('Standard')->change();
-        });
+        // Remove this migration since we've added stadium_image to the create_matches_table migration
     }
 
     public function down()
     {
-        Schema::table('matches', function (Blueprint $table) {
-            $table->dropColumn('stadium_image');
-            $table->string('ticket_type')->change();
-        });
+        // No need to do anything here
     }
 };

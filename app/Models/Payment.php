@@ -13,7 +13,6 @@ class Payment extends Model
 
     protected $fillable = [
         'user_id',
-        'ticket_id',
         'amount',
         'payment_method',
         'transaction_id',
@@ -29,8 +28,8 @@ class Payment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function ticket()
+    public function tickets()
     {
-        return $this->belongsTo(Ticket::class);
+        return $this->hasMany(Ticket::class);
     }
 }

@@ -4,9 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Database\Seeders\AdminUserSeeder;
-use Database\Seeders\MatchSeeder;
-use Database\Seeders\MatchesTableSeeder;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,15 +15,14 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminUserSeeder::class,
-            MatchSeeder::class,
-            MatchesTableSeeder::class,
         ]);
 
-        // User::factory(10)->create();
-
+        // Create a test user
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'password' => bcrypt('password'),
+            'role' => 'user'
         ]);
     }
 }

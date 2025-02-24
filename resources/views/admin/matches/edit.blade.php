@@ -21,36 +21,38 @@
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </div>
 
-                        <!-- Home Team -->
-                        <div>
-                            <x-input-label for="home_team" :value="__('Home Team')" />
-                            <x-text-input id="home_team" name="home_team" type="text" class="mt-1 block w-full" 
-                                        :value="old('home_team', $match->home_team)" required />
-                            <x-input-error :messages="$errors->get('home_team')" class="mt-2" />
+                        <!-- Teams -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <x-input-label for="home_team" :value="__('Home Team')" />
+                                <x-text-input id="home_team" name="home_team" type="text" class="mt-1 block w-full" 
+                                            :value="old('home_team', $match->home_team)" required />
+                                <x-input-error :messages="$errors->get('home_team')" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="away_team" :value="__('Away Team')" />
+                                <x-text-input id="away_team" name="away_team" type="text" class="mt-1 block w-full" 
+                                            :value="old('away_team', $match->away_team)" required />
+                                <x-input-error :messages="$errors->get('away_team')" class="mt-2" />
+                            </div>
                         </div>
 
-                        <!-- Away Team -->
-                        <div>
-                            <x-input-label for="away_team" :value="__('Away Team')" />
-                            <x-text-input id="away_team" name="away_team" type="text" class="mt-1 block w-full" 
-                                        :value="old('away_team', $match->away_team)" required />
-                            <x-input-error :messages="$errors->get('away_team')" class="mt-2" />
-                        </div>
+                        <!-- Date and Time -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <x-input-label for="match_date" :value="__('Match Date')" />
+                                <x-text-input id="match_date" name="match_date" type="date" class="mt-1 block w-full" 
+                                            :value="old('match_date', $match->match_date)" required />
+                                <x-input-error :messages="$errors->get('match_date')" class="mt-2" />
+                            </div>
 
-                        <!-- Match Date -->
-                        <div>
-                            <x-input-label for="match_date" :value="__('Match Date')" />
-                            <x-text-input id="match_date" name="match_date" type="date" class="mt-1 block w-full" 
-                                        :value="old('match_date', $match->match_date)" required />
-                            <x-input-error :messages="$errors->get('match_date')" class="mt-2" />
-                        </div>
-
-                        <!-- Match Time -->
-                        <div>
-                            <x-input-label for="match_time" :value="__('Match Time')" />
-                            <x-text-input id="match_time" name="match_time" type="time" class="mt-1 block w-full" 
-                                        :value="old('match_time', $match->match_time)" required />
-                            <x-input-error :messages="$errors->get('match_time')" class="mt-2" />
+                            <div>
+                                <x-input-label for="match_time" :value="__('Match Time')" />
+                                <x-text-input id="match_time" name="match_time" type="time" class="mt-1 block w-full" 
+                                            :value="old('match_time', $match->match_time)" required />
+                                <x-input-error :messages="$errors->get('match_time')" class="mt-2" />
+                            </div>
                         </div>
 
                         <!-- Stadium -->
@@ -64,63 +66,38 @@
                         <!-- Stadium Image -->
                         <div>
                             <x-input-label for="stadium_image" :value="__('Stadium Image')" />
-                            <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                                <div class="text-center">
-                                    @if($match->stadium_image)
-                                        <div class="mb-4">
-                                            <img src="{{ asset('storage/' . $match->stadium_image) }}" 
-                                                 alt="Current stadium image" 
-                                                 class="mx-auto h-32 w-auto object-cover rounded-lg shadow-md">
-                                            <p class="mt-2 text-sm text-gray-500">Current image: {{ basename($match->stadium_image) }}</p>
-                                        </div>
-                                    @endif
-                                    <div class="mt-4 flex text-sm leading-6 text-gray-600">
-                                        <label for="stadium_image" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
-                                            <span>Upload a new image</span>
-                                            <input id="stadium_image" name="stadium_image" type="file" class="sr-only" accept="image/*">
-                                        </label>
-                                        <p class="pl-1">or drag and drop</p>
-                                    </div>
-                                    <p class="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 2MB</p>
+                            @if($match->stadium_image)
+                                <div class="mt-2 mb-4">
+                                    <img src="{{ asset('storage/' . $match->stadium_image) }}" 
+                                         alt="Current Stadium Image" 
+                                         class="w-48 h-32 object-cover rounded-lg">
                                 </div>
-                            </div>
+                            @endif
+                            <input type="file" 
+                                   id="stadium_image" 
+                                   name="stadium_image" 
+                                   accept="image/*"
+                                   class="mt-1 block w-full text-sm text-gray-500
+                                          file:mr-4 file:py-2 file:px-4
+                                          file:rounded-md file:border-0
+                                          file:text-sm file:font-semibold
+                                          file:bg-green-50 file:text-green-700
+                                          hover:file:bg-green-100" />
                             <x-input-error :messages="$errors->get('stadium_image')" class="mt-2" />
-                        </div>
-
-                        <!-- Ticket Type -->
-                        <div>
-                            <x-input-label for="ticket_type" :value="__('Ticket Type')" />
-                            <select id="ticket_type" name="ticket_type" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
-                                <option value="Standard" {{ old('ticket_type', $match->ticket_type) === 'Standard' ? 'selected' : '' }}>Standard</option>
-                                <option value="VIP" {{ old('ticket_type', $match->ticket_type) === 'VIP' ? 'selected' : '' }}>VIP</option>
-                                <option value="Premium" {{ old('ticket_type', $match->ticket_type) === 'Premium' ? 'selected' : '' }}>Premium</option>
-                            </select>
-                            <x-input-error :messages="$errors->get('ticket_type')" class="mt-2" />
-                        </div>
-
-                        <!-- Available Tickets -->
-                        <div>
-                            <x-input-label for="available_tickets" :value="__('Available Tickets')" />
-                            <x-text-input id="available_tickets" name="available_tickets" type="number" min="0" class="mt-1 block w-full" 
-                                        :value="old('available_tickets', $match->available_tickets)" required />
-                            <x-input-error :messages="$errors->get('available_tickets')" class="mt-2" />
-                        </div>
-
-                        <!-- Ticket Price -->
-                        <div>
-                            <x-input-label for="ticket_price" :value="__('Ticket Price')" />
-                            <div class="flex items-center">
-                                <span class="text-gray-500 mr-2">£</span>
-                                <x-text-input id="ticket_price" name="ticket_price" type="number" step="0.01" min="0" class="mt-1 block w-full" 
-                                            :value="old('ticket_price', $match->ticket_price)" required />
+                            
+                            <!-- Image Preview -->
+                            <div id="imagePreview" class="mt-2 hidden">
+                                <img id="preview" src="#" alt="Stadium Preview" class="w-48 h-32 object-cover rounded-lg">
                             </div>
-                            <x-input-error :messages="$errors->get('ticket_price')" class="mt-2" />
                         </div>
 
-                        <!-- Match Description -->
+                        <!-- Description -->
                         <div>
                             <x-input-label for="description" :value="__('Description')" />
-                            <textarea id="description" name="description" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" rows="3">{{ old('description', $match->description) }}</textarea>
+                            <textarea id="description" 
+                                    name="description" 
+                                    class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" 
+                                    rows="3">{{ old('description', $match->description) }}</textarea>
                             <x-input-error :messages="$errors->get('description')" class="mt-2" />
                         </div>
 
@@ -136,17 +113,107 @@
                             <x-input-error :messages="$errors->get('match_status')" class="mt-2" />
                         </div>
 
-                        <div class="flex items-center justify-end mt-4">
-                            <x-secondary-button onclick="window.history.back()" type="button" class="mr-3">
-                                {{ __('Cancel') }}
-                            </x-secondary-button>
-                            <x-primary-button>
-                                {{ __('Update Match') }}
-                            </x-primary-button>
+                        <!-- Ticket Types -->
+                        <div class="space-y-6">
+                            <h3 class="text-lg font-medium text-gray-900">Ticket Types</h3>
+
+                            <!-- VIP Tickets -->
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-medium text-gray-700 mb-4">VIP Tickets</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <x-input-label for="ticket_types_vip_price" :value="__('Price (£)')" />
+                                        <x-text-input id="ticket_types_vip_price" type="number" step="0.01" 
+                                            name="ticket_types[vip][price]" 
+                                            :value="old('ticket_types.vip.price', $match->ticketTypes->where('type', 'vip')->first()?->price ?? '')" 
+                                            class="block mt-1 w-full" required />
+                                        <x-input-error :messages="$errors->get('ticket_types.vip.price')" class="mt-2" />
+                                    </div>
+                                    <div>
+                                        <x-input-label for="ticket_types_vip_available" :value="__('Available Tickets')" />
+                                        <x-text-input id="ticket_types_vip_available" type="number" 
+                                            name="ticket_types[vip][available_tickets]" 
+                                            :value="old('ticket_types.vip.available_tickets', $match->ticketTypes->where('type', 'vip')->first()?->available_tickets ?? '')" 
+                                            class="block mt-1 w-full" required />
+                                        <x-input-error :messages="$errors->get('ticket_types.vip.available_tickets')" class="mt-2" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Premium Tickets -->
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-medium text-gray-700 mb-4">Premium Tickets</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <x-input-label for="ticket_types_premium_price" :value="__('Price (£)')" />
+                                        <x-text-input id="ticket_types_premium_price" type="number" step="0.01" 
+                                            name="ticket_types[premium][price]" 
+                                            :value="old('ticket_types.premium.price', $match->ticketTypes->where('type', 'premium')->first()?->price ?? '')" 
+                                            class="block mt-1 w-full" required />
+                                        <x-input-error :messages="$errors->get('ticket_types.premium.price')" class="mt-2" />
+                                    </div>
+                                    <div>
+                                        <x-input-label for="ticket_types_premium_available" :value="__('Available Tickets')" />
+                                        <x-text-input id="ticket_types_premium_available" type="number" 
+                                            name="ticket_types[premium][available_tickets]" 
+                                            :value="old('ticket_types.premium.available_tickets', $match->ticketTypes->where('type', 'premium')->first()?->available_tickets ?? '')" 
+                                            class="block mt-1 w-full" required />
+                                        <x-input-error :messages="$errors->get('ticket_types.premium.available_tickets')" class="mt-2" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Standard Tickets -->
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-medium text-gray-700 mb-4">Standard Tickets</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <x-input-label for="ticket_types_standard_price" :value="__('Price (£)')" />
+                                        <x-text-input id="ticket_types_standard_price" type="number" step="0.01" 
+                                            name="ticket_types[standard][price]" 
+                                            :value="old('ticket_types.standard.price', $match->ticketTypes->where('type', 'standard')->first()?->price ?? '')" 
+                                            class="block mt-1 w-full" required />
+                                        <x-input-error :messages="$errors->get('ticket_types.standard.price')" class="mt-2" />
+                                    </div>
+                                    <div>
+                                        <x-input-label for="ticket_types_standard_available" :value="__('Available Tickets')" />
+                                        <x-text-input id="ticket_types_standard_available" type="number" 
+                                            name="ticket_types[standard][available_tickets]" 
+                                            :value="old('ticket_types.standard.available_tickets', $match->ticketTypes->where('type', 'standard')->first()?->available_tickets ?? '')" 
+                                            class="block mt-1 w-full" required />
+                                        <x-input-error :messages="$errors->get('ticket_types.standard.available_tickets')" class="mt-2" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-end mt-6">
+                            <x-primary-button>{{ __('Update Match') }}</x-primary-button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    @push('scripts')
+    <script>
+        // Image preview functionality
+        document.getElementById('stadium_image').addEventListener('change', function(e) {
+            const preview = document.getElementById('preview');
+            const previewContainer = document.getElementById('imagePreview');
+            
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                }
+                
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+    </script>
+    @endpush
 </x-admin-layout>

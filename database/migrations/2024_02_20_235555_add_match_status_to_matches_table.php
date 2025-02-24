@@ -11,9 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('matches', function (Blueprint $table) {
-            $table->enum('match_status', ['scheduled', 'live', 'completed', 'cancelled'])->default('scheduled');
-        });
+        // Remove this migration since we've added match_status to the create_matches_table migration
     }
 
     /**
@@ -21,8 +19,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('matches', function (Blueprint $table) {
-            $table->dropColumn('match_status');
-        });
+        // No need to do anything here
     }
 };

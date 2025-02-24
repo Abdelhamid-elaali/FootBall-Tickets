@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -18,9 +19,11 @@ return new class extends Migration
             $table->string('away_team');
             $table->dateTime('match_date');
             $table->string('stadium');
-            $table->decimal('ticket_price', 10, 2);
-            $table->string('ticket_type')->default('standard'); 
-            $table->integer('available_tickets');
+            $table->string('stadium_image')->nullable();
+            $table->decimal('ticket_price', 10, 2)->nullable();
+            $table->enum('ticket_type', ['Standard', 'VIP', 'Premium'])->default('Standard');
+            $table->integer('available_tickets')->nullable();
+            $table->enum('match_status', ['scheduled', 'live', 'completed', 'cancelled'])->default('scheduled');
             $table->text('description')->nullable(); 
             $table->timestamps();
         });

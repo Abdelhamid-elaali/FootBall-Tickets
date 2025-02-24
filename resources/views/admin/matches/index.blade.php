@@ -53,12 +53,18 @@
                                             <div class="text-sm text-gray-900">{{ $match->stadium }}</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">£{{ number_format($match->ticket_price, 2) }}</div>
+                                            <div class="text-sm text-gray-900">
+                                                @if($match->ticketTypes->count() > 0)
+                                                    £{{ number_format($match->ticketTypes->min('price'), 2) }}
+                                                @else
+                                                    No tickets available
+                                                @endif
+                                            </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                {{ $match->available_tickets > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                                {{ $match->available_tickets > 0 ? 'Available' : 'Sold Out' }}
+                                                {{ $match->ticketTypes->sum('available_tickets') > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                                {{ $match->ticketTypes->sum('available_tickets') > 0 ? 'Available' : 'Sold Out' }}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">

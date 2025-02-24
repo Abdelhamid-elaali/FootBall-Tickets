@@ -12,12 +12,21 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $stats = [
-            'total_matches' => FootballMatch::count(),
-            'upcoming_matches' => FootballMatch::where('match_date', '>', now())->count(),
-            'total_tickets' => Ticket::count(),
-            'total_sales' => Payment::where('status', 'completed')->sum('amount'),
-        ];
+        try {
+            $stats = [
+                'total_matches' => FootballMatch::count(),
+                'upcoming_matches' => FootballMatch::where('match_date', '>', now())->count(),
+                'total_tickets' => Ticket::count(),
+                'total_sales' => Payment::where('status', 'completed')->sum('amount') ?? 0,
+            ];
+        } catch (\Exception $e) {
+            $stats = [
+                'total_matches' => FootballMatch::count(),
+                'upcoming_matches' => FootballMatch::where('match_date', '>', now())->count(),
+                'total_tickets' => Ticket::count(),
+                'total_sales' => 0,
+            ];
+        }
 
         $latest_matches = FootballMatch::latest()->take(5)->get();
         $latest_tickets = Ticket::with(['user', 'match'])->latest()->take(5)->get();

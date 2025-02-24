@@ -19,33 +19,82 @@ class TicketController extends Controller
         return view('tickets.index', compact('tickets'));
     }
 
+    public function create(FootballMatch $match)
+    {
+        // Load ticket types with the match
+        $match->load('ticketTypes');
+
+        // Check if there are any available tickets
+        $totalAvailableTickets = $match->ticketTypes->sum('available_tickets');
+        if ($totalAvailableTickets <= 0) {
+            return back()->with('error', 'Sorry, this match is sold out.');
+        }
+
+        return view('tickets.create', compact('match'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
-            'match_id' => 'required|exists:matches,id',
-            'quantity' => 'required|integer|min:1|max:10',
+            'match_id' => 'required|exists:football_matches,id',
+            'quantities' => 'required|array',
+            'quantities.*' => 'integer|min:0',
         ]);
 
-        $match = FootballMatch::findOrFail($request->match_id);
-
-        if ($match->available_tickets < $request->quantity) {
-            return back()->with('error', 'Not enough tickets available.');
-        }
-
+        $match = FootballMatch::with('ticketTypes')->findOrFail($request->match_id);
+        $totalAmount = 0;
         $tickets = [];
-        for ($i = 0; $i < $request->quantity; $i++) {
-            $tickets[] = Ticket::create([
-                'user_id' => auth()->id(),
-                'match_id' => $match->id,
-                'price' => $match->ticket_price,
-                'status' => 'pending',
-                'ticket_number' => 'TIX-' . Str::random(10),
-            ]);
+
+        // Check if any tickets were selected
+        if (array_sum($request->quantities) === 0) {
+            return back()->with('error', 'Please select at least one ticket.');
         }
 
-        $match->decrement('available_tickets', $request->quantity);
+        \DB::beginTransaction();
 
-        // Redirect with success message
-        return redirect()->route('my-tickets')->with('success', 'Booking successful! You have booked ' . $request->quantity . ' ticket(s) for ' . $match->home_team . ' vs ' . $match->away_team . '. Check your tickets below.');
+        try {
+            foreach ($request->quantities as $typeId => $quantity) {
+                if ($quantity > 0) {
+                    $ticketType = $match->ticketTypes->find($typeId);
+                    
+                    if (!$ticketType) {
+                        throw new \Exception('Invalid ticket type.');
+                    }
+
+                    if ($ticketType->available_tickets < $quantity) {
+                        throw new \Exception("Not enough {$ticketType->name} tickets available.");
+                    }
+
+                    // Create tickets
+                    for ($i = 0; $i < $quantity; $i++) {
+                        $ticket = Ticket::create([
+                            'user_id' => auth()->id(),
+                            'match_id' => $match->id,
+                            'ticket_type_id' => $typeId,
+                            'ticket_number' => Str::random(10),
+                            'price' => $ticketType->price,
+                            'status' => 'pending'
+                        ]);
+                        $tickets[] = $ticket;
+                        $totalAmount += $ticketType->price;
+                    }
+
+                    // Update available tickets
+                    $ticketType->decrement('available_tickets', $quantity);
+                }
+            }
+
+            \DB::commit();
+
+            // Redirect to payment page with ticket information
+            return redirect()->route('payment.create', [
+                'tickets' => array_map(fn($ticket) => $ticket->id, $tickets),
+                'total' => $totalAmount
+            ])->with('success', 'Tickets reserved successfully. Please complete your payment.');
+
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return back()->with('error', $e->getMessage());
+        }
     }
 }

@@ -12,14 +12,7 @@ class AddRoleToUsersTable extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['user', 'admin', 'super_admin'])->default('user');
-        });
-
-        // Set the first user as super_admin
-        DB::table('users')
-            ->where('id', 1)
-            ->update(['role' => 'super_admin']);
+        // Remove this migration since we've added role to the create_users_table migration
     }
 
     /**
@@ -27,8 +20,6 @@ class AddRoleToUsersTable extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
-        });
+        // No need to do anything here
     }
 }

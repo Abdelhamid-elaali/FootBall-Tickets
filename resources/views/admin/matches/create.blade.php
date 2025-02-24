@@ -59,38 +59,78 @@
 
                             <div>
                                 <x-input-label for="stadium_image" :value="__('Stadium Image')" />
-                                <input id="stadium_image" name="stadium_image" type="file" accept="image/*" class="block w-full text-sm text-gray-500 mt-1
-                                    file:mr-4 file:py-2 file:px-4
-                                    file:rounded-full file:border-0
-                                    file:text-sm file:font-semibold
-                                    file:bg-indigo-50 file:text-indigo-700
-                                    hover:file:bg-indigo-100" required />
+                                <input type="file" 
+                                       id="stadium_image" 
+                                       name="stadium_image" 
+                                       accept="image/*"
+                                       class="mt-1 block w-full text-sm text-gray-500
+                                              file:mr-4 file:py-2 file:px-4
+                                              file:rounded-md file:border-0
+                                              file:text-sm file:font-semibold
+                                              file:bg-green-50 file:text-green-700
+                                              hover:file:bg-green-100"
+                                       required />
                                 <x-input-error :messages="$errors->get('stadium_image')" class="mt-2" />
+                                
+                                <!-- Image Preview -->
+                                <div id="imagePreview" class="mt-2 hidden">
+                                    <img id="preview" src="#" alt="Stadium Preview" class="max-w-xs rounded-lg shadow-sm">
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Ticket Information -->
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div>
-                                <x-input-label for="ticket_type" :value="__('Ticket Type')" />
-                                <select id="ticket_type" name="ticket_type" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                                    <option value="Standard" {{ old('ticket_type') == 'Standard' ? 'selected' : '' }}>Standard</option>
-                                    <option value="VIP" {{ old('ticket_type') == 'VIP' ? 'selected' : '' }}>VIP</option>
-                                    <option value="Premium" {{ old('ticket_type') == 'Premium' ? 'selected' : '' }}>Premium</option>
-                                </select>
-                                <x-input-error :messages="$errors->get('ticket_type')" class="mt-2" />
+                        <div class="space-y-6">
+                            <h3 class="text-lg font-medium text-gray-900">Ticket Types</h3>
+
+                            <!-- VIP Tickets -->
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-medium text-gray-700 mb-4">VIP Tickets</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <x-input-label for="ticket_types_vip_price" :value="__('Price (£)')" />
+                                        <x-text-input id="ticket_types_vip_price" type="number" step="0.01" name="ticket_types[vip][price]" :value="old('ticket_types.vip.price')" class="block mt-1 w-full" required />
+                                        <x-input-error :messages="$errors->get('ticket_types.vip.price')" class="mt-2" />
+                                    </div>
+                                    <div>
+                                        <x-input-label for="ticket_types_vip_available" :value="__('Available Tickets')" />
+                                        <x-text-input id="ticket_types_vip_available" type="number" name="ticket_types[vip][available_tickets]" :value="old('ticket_types.vip.available_tickets')" class="block mt-1 w-full" required />
+                                        <x-input-error :messages="$errors->get('ticket_types.vip.available_tickets')" class="mt-2" />
+                                    </div>
+                                </div>
                             </div>
 
-                            <div>
-                                <x-input-label for="ticket_price" :value="__('Ticket Price')" />
-                                <x-text-input id="ticket_price" class="block mt-1 w-full" type="number" name="ticket_price" :value="old('ticket_price')" step="0.01" min="0" required />
-                                <x-input-error :messages="$errors->get('ticket_price')" class="mt-2" />
+                            <!-- Standard Tickets -->
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-medium text-gray-700 mb-4">Standard Tickets</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <x-input-label for="ticket_types_standard_price" :value="__('Price (£)')" />
+                                        <x-text-input id="ticket_types_standard_price" type="number" step="0.01" name="ticket_types[standard][price]" :value="old('ticket_types.standard.price')" class="block mt-1 w-full" required />
+                                        <x-input-error :messages="$errors->get('ticket_types.standard.price')" class="mt-2" />
+                                    </div>
+                                    <div>
+                                        <x-input-label for="ticket_types_standard_available" :value="__('Available Tickets')" />
+                                        <x-text-input id="ticket_types_standard_available" type="number" name="ticket_types[standard][available_tickets]" :value="old('ticket_types.standard.available_tickets')" class="block mt-1 w-full" required />
+                                        <x-input-error :messages="$errors->get('ticket_types.standard.available_tickets')" class="mt-2" />
+                                    </div>
+                                </div>
                             </div>
 
-                            <div>
-                                <x-input-label for="available_tickets" :value="__('Available Tickets')" />
-                                <x-text-input id="available_tickets" class="block mt-1 w-full" type="number" name="available_tickets" :value="old('available_tickets')" min="0" required />
-                                <x-input-error :messages="$errors->get('available_tickets')" class="mt-2" />
+                            <!-- Premium Tickets -->
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-medium text-gray-700 mb-4">Premium Tickets</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <x-input-label for="ticket_types_premium_price" :value="__('Price (£)')" />
+                                        <x-text-input id="ticket_types_premium_price" type="number" step="0.01" name="ticket_types[premium][price]" :value="old('ticket_types.premium.price')" class="block mt-1 w-full" required />
+                                        <x-input-error :messages="$errors->get('ticket_types.premium.price')" class="mt-2" />
+                                    </div>
+                                    <div>
+                                        <x-input-label for="ticket_types_premium_available" :value="__('Available Tickets')" />
+                                        <x-text-input id="ticket_types_premium_available" type="number" name="ticket_types[premium][available_tickets]" :value="old('ticket_types.premium.available_tickets')" class="block mt-1 w-full" required />
+                                        <x-input-error :messages="$errors->get('ticket_types.premium.available_tickets')" class="mt-2" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -124,3 +164,24 @@
         </div>
     </div>
 </x-admin-layout>
+
+@push('scripts')
+<script>
+    // Image preview functionality
+    document.getElementById('stadium_image').addEventListener('change', function(e) {
+        const preview = document.getElementById('preview');
+        const previewContainer = document.getElementById('imagePreview');
+        
+        if (e.target.files && e.target.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                previewContainer.classList.remove('hidden');
+            }
+            
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    });
+</script>
+@endpush

@@ -48,6 +48,13 @@
                                         {{ $match->stadium }}
                                     </dd>
                                 </div>
+                                @if($match->stadium_image)
+                                    <div class="mt-4">
+                                        <img src="{{ url($match->stadium_image) }}" 
+                                             alt="{{ $match->stadium }}" 
+                                             class="w-full h-64 object-cover rounded-lg shadow-lg">
+                                    </div>
+                                @endif
                                 <div class="sm:grid sm:grid-cols-3 sm:gap-4">
                                     <dt class="text-sm font-medium text-gray-500">Status</dt>
                                     <dd class="mt-1 text-sm sm:mt-0 sm:col-span-2">
@@ -64,36 +71,34 @@
 
                         <div>
                             <h3 class="text-lg font-medium text-gray-900 mb-4">Ticket Information</h3>
-                            <dl class="grid grid-cols-1 gap-4">
-                                <div class="sm:grid sm:grid-cols-3 sm:gap-4">
-                                    <dt class="text-sm font-medium text-gray-500">Ticket Type</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                        {{ ucfirst($match->ticket_type) }}
-                                    </dd>
-                                </div>
-                                <div class="sm:grid sm:grid-cols-3 sm:gap-4">
-                                    <dt class="text-sm font-medium text-gray-500">Price</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                        £{{ number_format($match->ticket_price, 2) }}
-                                    </dd>
-                                </div>
-                                <div class="sm:grid sm:grid-cols-3 sm:gap-4">
-                                    <dt class="text-sm font-medium text-gray-500">Available Tickets</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $match->available_tickets > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                            {{ $match->available_tickets > 0 ? $match->available_tickets . ' tickets available' : 'Sold Out' }}
+                            <div class="bg-white rounded-lg border border-gray-200 p-4">
+                                @forelse($match->ticketTypes as $ticket)
+                                <div class="flex items-center justify-between py-3 {{ !$loop->last ? 'border-b border-gray-200' : '' }}">
+                                    <div class="flex-1">
+                                        <div class="flex items-baseline">
+                                            <h4 class="text-base font-semibold text-gray-900 mr-2">{{ ucfirst($ticket->type) }}</h4>
+                                            <p class="text-xl font-bold text-indigo-600">£{{ number_format($ticket->price, 2) }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="ml-4">
+                                        <span class="px-3 py-1 text-sm font-medium rounded-full {{ $ticket->available_tickets > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                            {{ $ticket->available_tickets }} tickets available
                                         </span>
-                                    </dd>
+                                    </div>
                                 </div>
-                                @if($match->description)
-                                <div class="sm:grid sm:grid-cols-3 sm:gap-4">
-                                    <dt class="text-sm font-medium text-gray-500">Description</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                        {{ $match->description }}
-                                    </dd>
+                                @empty
+                                <div class="text-center py-4">
+                                    <p class="text-sm text-gray-500">No ticket types available</p>
                                 </div>
-                                @endif
-                            </dl>
+                                @endforelse
+
+                                <div class="mt-4 pt-4 border-t border-gray-200">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="text-sm font-medium text-gray-500">Total Available Tickets</h4>
+                                        <p class="text-xl font-bold text-gray-900">{{ $match->ticketTypes->sum('available_tickets') }}</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

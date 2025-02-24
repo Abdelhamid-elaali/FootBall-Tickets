@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tickets', function (Blueprint $table) {
+        Schema::create('ticket_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('match_id')->constrained('football_matches')->onDelete('cascade');
-            $table->string('seat_number')->nullable();
+            $table->string('type'); // e.g., 'VIP', 'Standard', 'Economy'
             $table->decimal('price', 10, 2);
-            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
-            $table->string('ticket_number')->unique();
+            $table->integer('available_tickets');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tickets');
+        Schema::dropIfExists('ticket_types');
     }
 };

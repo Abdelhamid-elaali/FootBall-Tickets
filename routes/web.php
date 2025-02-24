@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\MatchController as AdminMatchController;
+use App\Http\Controllers\PaymentController; // Added PaymentController
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\SuperAdminMiddleware;
@@ -25,7 +26,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     // Tickets routes
     Route::get('/my-tickets', [TicketController::class, 'index'])->name('my-tickets');
+    Route::get('/tickets/{match}/create', [TicketController::class, 'create'])->name('tickets.create');
     Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
+    
+    // Payment routes
+    Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
+    Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
+    Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+    Route::get('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
 });
 
 // Logout route
