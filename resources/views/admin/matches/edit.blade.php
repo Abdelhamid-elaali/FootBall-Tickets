@@ -66,13 +66,6 @@
                         <!-- Stadium Image -->
                         <div>
                             <x-input-label for="stadium_image" :value="__('Stadium Image')" />
-                            @if($match->stadium_image)
-                                <div class="mt-2 mb-4">
-                                    <img src="{{ asset('storage/' . $match->stadium_image) }}" 
-                                         alt="Current Stadium Image" 
-                                         class="w-48 h-32 object-cover rounded-lg">
-                                </div>
-                            @endif
                             <input type="file" 
                                    id="stadium_image" 
                                    name="stadium_image" 
