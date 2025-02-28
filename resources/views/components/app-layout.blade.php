@@ -104,10 +104,10 @@
                                  x-transition:leave-end="transform opacity-0 scale-95"
                                  class="absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 z-50"
                                  style="display: none;">
-                                <div class="px-4 py-2 border-b">
-                                    <p class="text-sm text-gray-500">Signed in as</p>
-                                    <p class="text-sm font-medium text-gray-900 truncate">{{ auth()->user()->email }}</p>
-                                    <p class="text-sm font-medium text-yellow-500 truncate">( {{ auth()->user()->role }} )</p>
+                                <p class="text-sm font-medium text-gray-700 truncate px-4 py-2">{{ auth()->user()->email }}</p>
+                                <div class="flex items-center px-4 py-2 border-b">
+                                    <p class="text-sm font-medium text-gray-500">Signed in as  :</p>
+                                    <p class="text-[13px] text-yellow-500 opacity-65 truncate">{{ auth()->user()->role }}</p>
                                 </div>
                                 <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                     <div class="flex items-center">

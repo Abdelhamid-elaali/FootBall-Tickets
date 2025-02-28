@@ -75,7 +75,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center md:text-left justify-items-center md:justify-items-start">
             <!-- Company Info -->
-            <div class=text-green-500 max-w-sm">
+            <div class=text-green-500 max-w-sm>
                 <h4 class="text-lg font-semibold mb-4">About FootballTix</h4>
                 <p class="text-white">Your trusted source for football match tickets. Making it easy to attend the games you love.</p>
             </div>
@@ -84,10 +84,10 @@
             <div class="text-green-500">
                 <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
                 <ul class="space-y-2">
-                    <li><a href="#" class="text-white hover:text-green-500 transition-colors duration-300">How It Works</a></li>
-                    <li><a href="#" class="text-white hover:text-green-500 transition-colors duration-300">FAQs</a></li>
-                    <li><a href="#" class="text-white hover:text-green-500 transition-colors duration-300">Terms of Service</a></li>
-                    <li><a href="#" class="text-white hover:text-green-500 transition-colors duration-300">Privacy Policy</a></li>
+                    <li><a href="{{ route('how-it-works') }}" class="text-white hover:text-green-500 transition-colors duration-300">How It Works</a></li>
+                    <li><a href="{{ route('faqs') }}" class="text-white hover:text-green-500 transition-colors duration-300">FAQs</a></li>
+                    <li><a href="{{ route('terms') }}" class="text-white hover:text-green-500 transition-colors duration-300">Terms of Service</a></li>
+                    <li><a href="{{ route('privacy') }}" class="text-white hover:text-green-500 transition-colors duration-300">Privacy Policy</a></li>
                 </ul>
             </div>
 

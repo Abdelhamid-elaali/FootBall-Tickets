@@ -50,6 +50,26 @@ Route::post('/logout', function () {
     return redirect()->route('home');
 })->name('logout')->middleware('auth');
 
+// How It Works page
+Route::get('/HowWorks', function () {
+    return view('pages.how-it-works');
+})->name('how-it-works');
+
+// FAQs page
+Route::get('/FAQs', function () {
+    return view('pages.faqs');
+})->name('faqs');
+
+// Terms of Service page
+Route::get('/terms', function () {
+    return view('pages.terms-of-service');
+})->name('terms');
+
+// Privacy Policy page
+Route::get('/privacy', function () {
+    return view('pages.privacy-policy');
+})->name('privacy');
+
 // Admin routes
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::prefix('admin')->group(function () {
