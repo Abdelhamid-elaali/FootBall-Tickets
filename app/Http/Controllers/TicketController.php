@@ -6,13 +6,14 @@ use App\Models\Ticket;
 use App\Models\FootballMatch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TicketController extends Controller
 {
     public function index()
     {
         $tickets = auth()->user()->tickets()
-            ->with(['match', 'payment'])
+            ->with(['match', 'payment', 'ticketType'])
             ->latest()
             ->get();
 
@@ -96,5 +97,39 @@ class TicketController extends Controller
             \DB::rollBack();
             return back()->with('error', $e->getMessage());
         }
+    }
+
+    public function download(Ticket $ticket)
+    {
+        // Ensure the user owns this ticket
+        if ($ticket->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        // Load necessary relationships
+        $ticket->load(['match', 'ticketType']);
+
+        // Return the e-ticket view
+        return view('tickets.e-ticket', compact('ticket'));
+    }
+
+    public function downloadPdf(Ticket $ticket)
+    {
+        // Ensure the user owns this ticket
+        if ($ticket->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        // Load necessary relationships
+        $ticket->load(['match', 'ticketType', 'user']);
+
+        // Generate PDF using DOMPDF
+        $pdf = Pdf::loadView('tickets.pdf', compact('ticket'));
+
+        // Generate filename
+        $filename = 'ticket-' . $ticket->ticket_number . '.pdf';
+
+        // Return the PDF for download
+        return $pdf->download($filename);
     }
 }

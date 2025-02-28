@@ -29,6 +29,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/my-tickets', [TicketController::class, 'index'])->name('my-tickets');
     Route::get('/tickets/{match}/create', [TicketController::class, 'create'])->name('tickets.create');
     Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
+    Route::get('/tickets/{ticket}/download', [TicketController::class, 'download'])->name('tickets.download');
+    Route::get('/tickets/{ticket}/download-pdf', [TicketController::class, 'downloadPdf'])->name('tickets.download-pdf');
     
     // Payment routes
     Route::get('/payment/confirm', [PaymentController::class, 'create'])->name('payment.confirm');
