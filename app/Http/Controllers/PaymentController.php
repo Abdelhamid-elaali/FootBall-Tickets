@@ -49,13 +49,11 @@ class PaymentController extends Controller
         }
 
         $total = $tickets->sum('price');
-
+        $payment_method=$request->payment_method;
+        $ticket_ids = $request->ticket_ids;
         // Redirect to PayPal payment
-        return redirect()->route('paypal.create', [
-            'ticket_ids' => $request->ticket_ids,
-            'total' => $total,
-            'payment_method' => $request->payment_method
-        ]);
+        return view('payment.redirect', compact('ticket_ids', 'total', 'payment_method'));
+       
     }
 
     public function success()

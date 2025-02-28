@@ -8,12 +8,55 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\MatchController as AdminMatchController;
-use App\Http\Controllers\PaymentController; // Added PaymentController
-use App\Http\Controllers\PayPalController; // Added PayPalController
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PayPalController;
+use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\SuperAdminMiddleware;
 
+// Authentication Routes
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+// Registration Routes
+Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [RegisterController::class, 'register']);
+
+// Password Reset OTP Routes
+Route::get('/forgot-password', function () {
+    return view('auth.forgot-password');
+})->middleware('guest')->name('password.request');
+
+Route::post('/forgot-password', [PasswordResetController::class, 'sendOtp'])
+    ->middleware('guest')
+    ->name('password.email');
+
+Route::get('/verify-otp', [PasswordResetController::class, 'showVerifyOtpForm'])
+    ->middleware('guest')
+    ->name('password.verify-otp');
+
+Route::post('/verify-otp', [PasswordResetController::class, 'verifyOtp'])
+    ->middleware('guest')
+    ->name('password.verify-otp');
+
+Route::get('/reset-password/{token}', [PasswordResetController::class, 'showResetForm'])
+    ->middleware('guest')
+    ->name('password.reset');
+
+Route::post('/reset-password', [PasswordResetController::class, 'reset'])
+    ->middleware('guest')
+    ->name('password.update');
+
+Route::get('/password/reset', function () {
+    return redirect()->route('password.request');
+})->middleware('guest');
+
+// Main Application Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {

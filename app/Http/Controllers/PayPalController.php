@@ -50,7 +50,7 @@ class PayPalController extends Controller
             if (isset($order['id']) && $order['id']) {
                 session(['paypal_order_id' => $order['id']]);
                 session(['ticket_ids' => $request->ticket_ids]);
-                
+                dd($order['links']);
                 return redirect($order['links'][1]['href']);
             }
 

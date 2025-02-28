@@ -6,6 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Football Tickets') }}</title>
+        <link rel="icon" href="{{ asset('./images/FootballTix.png') }}" type="image/x-icon" class="w-14 h-14" />
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -15,6 +16,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <div class="min-h-screen bg-gray-100">
+        @yield('content')
         <!-- Navigation Bar -->
         <nav class="fixed w-full top-0 z-50 bg-black border-b border-green-500" x-data="{ open: false }">
             <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">

@@ -13,7 +13,7 @@
                                 <div class="border rounded-lg overflow-hidden bg-white shadow-md hover:shadow-lg transition">
                                     <div class="bg-green-600 text-white px-4 py-2">
                                         <h3 class="text-lg font-semibold">{{ $ticket->match->home_team }} vs {{ $ticket->match->away_team }}</h3>
-                                        <p class="text-sm opacity-90">{{ $ticket->ticketType->name ?? 'Standard' }}</p>
+                                        <p class="text-sm opacity-90 capitalize">{{ $ticket->ticketType->type ?? 'Standard' }}</p>
                                     </div>
                                     <div class="p-4">
                                         <div class="mb-4">
@@ -35,7 +35,7 @@
                                                 {{ ucfirst($ticket->status) }}
                                             </span>
                                         </div>
-                                        <div class="flex space-x-2">
+                                        <div class="flex justify-center space-x-2">
                                             <a href="{{ route('tickets.download', $ticket) }}" 
                                                class="flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
                                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
