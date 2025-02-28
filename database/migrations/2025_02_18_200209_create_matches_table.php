@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('matches', function (Blueprint $table) {
+        Schema::create('football_matches', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable(); 
             $table->string('home_team');
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('matches');
+        Schema::dropIfExists('football_matches');
     }
 };

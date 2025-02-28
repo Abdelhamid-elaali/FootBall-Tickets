@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('matches', function (Blueprint $table) {
+        Schema::table('football_matches', function (Blueprint $table) {
             // Remove old columns
             $table->dropColumn([
                 'ticket_price',
@@ -26,7 +26,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('matches', function (Blueprint $table) {
+        Schema::table('football_matches', function (Blueprint $table) {
             $table->decimal('ticket_price', 10, 2)->after('stadium');
             $table->integer('available_tickets')->after('ticket_price');
             $table->string('ticket_type')->after('available_tickets');

@@ -35,7 +35,7 @@
                             <div class="mt-4">
                                 <img src="{{ url($match->stadium_image) }}" 
                                      alt="{{ $match->stadium }}" 
-                                     class="w-full h-48 object-cover rounded-lg">
+                                     class="w-154 h-64 object-cover rounded-lg">
                             </div>
                         @endif
 
@@ -54,66 +54,25 @@
 
                         <!-- Ticket Type Selection -->
                         <div class="space-y-4">
-                            <h3 class="text-lg font-medium text-gray-900">Select Ticket Type</h3>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                @foreach($match->ticketTypes as $ticketType)
-                                    <div class="relative">
-                                        <input type="radio" 
-                                               id="ticket_type_{{ $ticketType->type }}" 
-                                               name="ticket_type" 
-                                               value="{{ $ticketType->type }}"
-                                               class="peer hidden" 
-                                               {{ $loop->first ? 'checked' : '' }}
-                                               onchange="updatePriceAndQuantity()">
-                                        <label for="ticket_type_{{ $ticketType->type }}" 
-                                               class="block p-6 bg-white border-2 rounded-lg cursor-pointer
-                                                      peer-checked:border-green-500 peer-checked:bg-green-100
-                                                      hover:bg-gray-50 transition-all duration-200">
-                                            <div class="flex items-center justify-between mb-2">
-                                                <div class="text-lg font-semibold capitalize text-gray-900">
-                                                    {{ $ticketType->type }}
-                                                </div>
-                                                <div class="flex items-center justify-center w-6 h-6 border-2 rounded-full
-                                                            peer-checked:border-green-500 peer-checked:bg-green-500">
-                                                    <svg class="w-4 h-4 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                        <path d="M20 6L9 17l-5-5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="space-y-1">
-                                                <div class="text-sm text-gray-600">
-                                                    Price: <span class="font-medium text-gray-900">${{ number_format($ticketType->price, 2) }}</span>
-                                                </div>
-                                                <div class="text-sm text-gray-600">
-                                                    Available: <span class="font-medium text-gray-900">{{ $ticketType->available_tickets }}</span>
-                                                </div>
-                                            </div>
-                                        </label>
+                            <h3 class="text-lg font-medium text-gray-900">Select Tickets</h3>
+                            @foreach($match->ticketTypes as $type)
+                                <div class="flex items-center justify-between p-4 border rounded-lg">
+                                    <div>
+                                        <h4 class="font-medium uppercase tracking-wider">{{ $type->type }}</h4>
+                                        <p class="text-sm text-gray-600">${{ number_format($type->price, 2) }}</p>
+                                        <p class="text-sm text-gray-500">{{ $type->available_tickets }} tickets available</p>
                                     </div>
-                                @endforeach
-                            </div>
-                            @error('ticket_type')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <!-- Quantity Selection -->
-                        <div class="space-y-4">
-                            <h3 class="text-lg font-medium text-gray-900">Number of Tickets</h3>
-                            <div class="relative">
-                                <select id="quantity" 
-                                        name="quantity" 
-                                        class="block w-full pl-3 pr-10 py-3 text-base border-2 border-gray-300 
-                                               focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 
-                                               rounded-lg transition-all duration-200
-                                               bg-white"
-                                        onchange="updateTotal()">
-                                </select>
-                            </div>
-                            @error('quantity')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                                    <div class="w-24">
+                                        <select name="quantities[{{ $type->id }}]" 
+                                                class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500 rounded-md"
+                                                onchange="updateTotal()">
+                                            @for($i = 0; $i <= min(10, $type->available_tickets); $i++)
+                                                <option value="{{ $i }}">{{ $i }}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
 
                         <!-- Total Amount -->
@@ -125,7 +84,7 @@
                         </div>
 
                         <div class="flex items-center justify-end mt-8">
-                            <a href="{{ route('home') }}" 
+                            <a href="{{ route('matches.index') }}" 
                                class="text-base font-medium text-gray-600 hover:text-gray-900 mr-4">
                                 Cancel
                             </a>
@@ -145,45 +104,19 @@
     </div>
 
     <script>
-        // Store ticket types data
-        const ticketTypes = @json($match->ticketTypes);
-        
-        // Function to update quantity options based on selected ticket type
-        function updatePriceAndQuantity() {
-            const selectedType = document.querySelector('input[name="ticket_type"]:checked').value;
-            const ticketType = ticketTypes.find(t => t.type === selectedType);
-            const quantitySelect = document.getElementById('quantity');
-            
-            // Clear existing options
-            quantitySelect.innerHTML = '';
-            
-            // Add new options based on available tickets (max 10)
-            const maxTickets = Math.min(10, ticketType.available_tickets);
-            for (let i = 1; i <= maxTickets; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = `${i} ${i === 1 ? 'ticket' : 'tickets'}`;
-                quantitySelect.appendChild(option);
-            }
-            
-            // Update total
-            updateTotal();
-        }
-        
-        // Function to update total amount
         function updateTotal() {
-            const selectedType = document.querySelector('input[name="ticket_type"]:checked').value;
-            const ticketType = ticketTypes.find(t => t.type === selectedType);
-            const quantity = parseInt(document.getElementById('quantity').value);
-            const total = (quantity * ticketType.price).toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
+            let total = 0;
+            const ticketTypes = @json($match->ticketTypes);
+            
+            ticketTypes.forEach(type => {
+                const quantity = parseInt(document.querySelector(`select[name="quantities[${type.id}]"]`).value);
+                total += quantity * type.price;
             });
             
-            document.getElementById('total-amount').textContent = total;
+            document.getElementById('total-amount').textContent = total.toFixed(2);
         }
-        
-        // Initialize the form
-        updatePriceAndQuantity();
+
+        // Initialize total on page load
+        document.addEventListener('DOMContentLoaded', updateTotal);
     </script>
 </x-app-layout>

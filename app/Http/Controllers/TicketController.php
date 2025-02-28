@@ -73,7 +73,8 @@ class TicketController extends Controller
                             'ticket_type_id' => $typeId,
                             'ticket_number' => Str::random(10),
                             'price' => $ticketType->price,
-                            'status' => 'pending'
+                            'status' => 'pending',
+                            'ticket_type_id' => $typeId
                         ]);
                         $tickets[] = $ticket;
                         $totalAmount += $ticketType->price;
@@ -86,10 +87,9 @@ class TicketController extends Controller
 
             \DB::commit();
 
-            // Redirect to payment page with ticket information
-            return redirect()->route('payment.create', [
-                'tickets' => array_map(fn($ticket) => $ticket->id, $tickets),
-                'total' => $totalAmount
+            // Redirect to payment confirmation page with all ticket IDs
+            return redirect()->route('payment.confirm', [
+                'tickets' => array_map(fn($ticket) => $ticket->id, $tickets)
             ])->with('success', 'Tickets reserved successfully. Please complete your payment.');
 
         } catch (\Exception $e) {

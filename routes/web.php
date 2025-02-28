@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\MatchController as AdminMatchController;
 use App\Http\Controllers\PaymentController; // Added PaymentController
+use App\Http\Controllers\PayPalController; // Added PayPalController
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\SuperAdminMiddleware;
@@ -30,10 +31,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
     
     // Payment routes
-    Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
-    Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
+    Route::get('/payment/confirm', [PaymentController::class, 'create'])->name('payment.confirm');
+    Route::post('/payment/process', [PaymentController::class, 'store'])->name('payment.store');
     Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
     Route::get('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
+    
+    // PayPal payment routes
+    Route::post('/payment/paypal/create', [PayPalController::class, 'createPayment'])->name('paypal.create');
+    Route::get('/payment/paypal/success', [PayPalController::class, 'capturePayment'])->name('paypal.success');
+    Route::get('/payment/paypal/cancel', [PayPalController::class, 'cancelPayment'])->name('paypal.cancel');
 });
 
 // Logout route

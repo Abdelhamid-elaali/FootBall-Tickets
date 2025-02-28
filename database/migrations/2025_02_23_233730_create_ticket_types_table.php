@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ticket_types', function (Blueprint $table) {
             $table->id();
             $table->foreignId('match_id')->constrained('football_matches')->onDelete('cascade');
-            $table->string('type'); // e.g., 'VIP', 'Standard', 'Economy'
+            $table->string('type'); // e.g., 'VIP', 'Standard', 'Premium'
             $table->decimal('price', 10, 2);
             $table->integer('available_tickets');
             $table->timestamps();
