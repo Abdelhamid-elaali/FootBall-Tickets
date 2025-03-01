@@ -35,7 +35,7 @@
                                                 {{ ucfirst($ticket->status) }}
                                             </span>
                                         </div>
-                                        <div class="flex justify-center space-x-2">
+                                        <div class="flex justify-center space-x-4">
                                             <a href="{{ route('tickets.download', $ticket) }}" 
                                                class="flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
                                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

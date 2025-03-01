@@ -6,13 +6,31 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
-        // Remove this migration since we've added stadium_image to the create_matches_table migration
+        if (Schema::hasTable('football_matches')) {
+            Schema::table('football_matches', function (Blueprint $table) {
+                if (!Schema::hasColumn('football_matches', 'stadium_image')) {
+                    $table->string('stadium_image')->nullable();
+                }
+            });
+        }
     }
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
-        // No need to do anything here
+        if (Schema::hasTable('football_matches')) {
+            Schema::table('football_matches', function (Blueprint $table) {
+                if (Schema::hasColumn('football_matches', 'stadium_image')) {
+                    $table->dropColumn('stadium_image');
+                }
+            });
+        }
     }
 };

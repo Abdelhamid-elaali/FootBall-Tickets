@@ -12,21 +12,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('football_matches', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->nullable(); 
-            $table->string('home_team');
-            $table->string('away_team');
-            $table->dateTime('match_date');
-            $table->string('stadium');
-            $table->string('stadium_image')->nullable();
-            $table->decimal('ticket_price', 10, 2)->nullable();
-            $table->enum('ticket_type', ['Standard', 'VIP', 'Premium'])->default('Standard');
-            $table->integer('available_tickets')->nullable();
-            $table->enum('match_status', ['scheduled', 'live', 'completed', 'cancelled'])->default('scheduled');
-            $table->text('description')->nullable(); 
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('football_matches')) {
+            Schema::create('football_matches', function (Blueprint $table) {
+                $table->id();
+                $table->string('name')->nullable(); 
+                $table->string('home_team');
+                $table->string('away_team');
+                $table->dateTime('match_date');
+                $table->string('stadium');
+                $table->string('stadium_image')->nullable();
+                $table->decimal('ticket_price', 10, 2)->nullable();
+                $table->enum('ticket_type', ['Standard', 'VIP', 'Premium'])->default('Standard');
+                $table->integer('available_tickets')->nullable();
+                $table->enum('match_status', ['scheduled', 'live', 'completed', 'cancelled'])->default('scheduled');
+                $table->text('description')->nullable(); 
+                $table->timestamps();
+            });
+        }
     }
 
     /**

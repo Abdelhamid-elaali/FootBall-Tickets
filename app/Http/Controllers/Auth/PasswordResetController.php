@@ -105,21 +105,50 @@ class PasswordResetController extends Controller
             'password' => 'required|min:8|confirmed',
         ]);
 
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
-                $user->forceFill([
-                    'password' => Hash::make($password)
-                ])->setRememberToken(Str::random(60));
-
-                $user->save();
-
-                event(new PasswordReset($user));
+        try {
+            // Find user first
+            $user = User::where('email', $request->email)->first();
+            
+            if (!$user) {
+                return back()->withErrors(['email' => 'User not found.']);
             }
-        );
 
-        return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
+            // Verify the reset token
+            $tokenData = DB::table('password_reset_tokens')
+                ->where('email', $request->email)
+                ->first();
+
+            if (!$tokenData || !Hash::check($request->token, $tokenData->token)) {
+                return back()->withErrors(['email' => 'Invalid password reset token.']);
+            }
+
+            // Update password directly
+            $password = Hash::make($request->password);
+            $user->update([
+                'password' => $password,
+                'remember_token' => Str::random(60),
+            ]);
+
+            // Log in the user immediately
+            auth()->login($user);
+
+            // Fire the password reset event
+            event(new PasswordReset($user));
+
+            // Clear any reset tokens
+            DB::table('password_reset_tokens')
+                ->where('email', $user->email)
+                ->delete();
+
+            if (auth()->check()) {
+                return redirect()->route('matches.index')
+                    ->with('status', 'Password has been reset successfully.');
+            }
+
+            return back()->withErrors(['email' => 'Could not log in after password reset.']);
+        } catch (\Exception $e) {
+            Log::error('Password reset error: ' . $e->getMessage());
+            return back()->withErrors(['email' => 'An error occurred while resetting your password.']);
+        }
     }
 }
