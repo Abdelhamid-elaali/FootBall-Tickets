@@ -32,6 +32,7 @@
                         id="name"
                         type="text"
                         name="name"
+                        placeholder="Enter your full name"
                         value="{{ old('name') }}"
                         required
                         autofocus
@@ -60,6 +61,7 @@
                         id="email"
                         type="email"
                         name="email"
+                        placeholder="Enter your email address"
                         value="{{ old('email') }}"
                         required
                         autocomplete="username"
@@ -86,6 +88,7 @@
                         id="password"
                         type="password"
                         name="password"
+                        placeholder="Create a strong password"
                         required
                         autocomplete="new-password"
                         class="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
@@ -119,6 +122,7 @@
                         id="password_confirmation"
                         type="password"
                         name="password_confirmation"
+                        placeholder="Confirm your password"
                         required
                         autocomplete="new-password"
                         class="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"

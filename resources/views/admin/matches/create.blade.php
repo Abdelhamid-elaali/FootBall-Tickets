@@ -15,7 +15,7 @@
                         <!-- Match Name -->
                         <div>
                             <x-input-label for="name" :value="__('Match Name')" />
-                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" placeholder="e.g., Premier League: Manchester United vs Liverpool" :value="old('name')" required autofocus />
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </div>
 
@@ -23,13 +23,13 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <x-input-label for="home_team" :value="__('Home Team')" />
-                                <x-text-input id="home_team" class="block mt-1 w-full" type="text" name="home_team" :value="old('home_team')" required />
+                                <x-text-input id="home_team" class="block mt-1 w-full" type="text" name="home_team" placeholder="e.g., Manchester United" :value="old('home_team')" required />
                                 <x-input-error :messages="$errors->get('home_team')" class="mt-2" />
                             </div>
 
                             <div>
                                 <x-input-label for="away_team" :value="__('Away Team')" />
-                                <x-text-input id="away_team" class="block mt-1 w-full" type="text" name="away_team" :value="old('away_team')" required />
+                                <x-text-input id="away_team" class="block mt-1 w-full" type="text" name="away_team" placeholder="e.g., Liverpool" :value="old('away_team')" required />
                                 <x-input-error :messages="$errors->get('away_team')" class="mt-2" />
                             </div>
                         </div>
@@ -53,7 +53,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <x-input-label for="stadium" :value="__('Stadium')" />
-                                <x-text-input id="stadium" class="block mt-1 w-full" type="text" name="stadium" :value="old('stadium')" required />
+                                <x-text-input id="stadium" class="block mt-1 w-full" type="text" name="stadium" placeholder="e.g., Old Trafford" :value="old('stadium')" required />
                                 <x-input-error :messages="$errors->get('stadium')" class="mt-2" />
                             </div>
 
@@ -88,12 +88,12 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <x-input-label for="ticket_types_vip_price" :value="__('Price (£)')" />
-                                        <x-text-input id="ticket_types_vip_price" type="number" step="0.01" name="ticket_types[vip][price]" :value="old('ticket_types.vip.price')" class="block mt-1 w-full" required />
+                                        <x-text-input id="ticket_types_vip_price" type="number" step="0.01" name="ticket_types[vip][price]" placeholder="e.g., 75.00" :value="old('ticket_types.vip.price')" class="block mt-1 w-full" required />
                                         <x-input-error :messages="$errors->get('ticket_types.vip.price')" class="mt-2" />
                                     </div>
                                     <div>
                                         <x-input-label for="ticket_types_vip_available" :value="__('Available Tickets')" />
-                                        <x-text-input id="ticket_types_vip_available" type="number" name="ticket_types[vip][available_tickets]" :value="old('ticket_types.vip.available_tickets')" class="block mt-1 w-full" required />
+                                        <x-text-input id="ticket_types_vip_available" type="number" name="ticket_types[vip][available_tickets]" placeholder="e.g., 500" :value="old('ticket_types.vip.available_tickets')" class="block mt-1 w-full" required />
                                         <x-input-error :messages="$errors->get('ticket_types.vip.available_tickets')" class="mt-2" />
                                     </div>
                                 </div>
@@ -105,12 +105,12 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <x-input-label for="ticket_types_standard_price" :value="__('Price (£)')" />
-                                        <x-text-input id="ticket_types_standard_price" type="number" step="0.01" name="ticket_types[standard][price]" :value="old('ticket_types.standard.price')" class="block mt-1 w-full" required />
+                                        <x-text-input id="ticket_types_standard_price" type="number" step="0.01" name="ticket_types[standard][price]" placeholder="e.g., 50.00" :value="old('ticket_types.standard.price')" class="block mt-1 w-full" required />
                                         <x-input-error :messages="$errors->get('ticket_types.standard.price')" class="mt-2" />
                                     </div>
                                     <div>
                                         <x-input-label for="ticket_types_standard_available" :value="__('Available Tickets')" />
-                                        <x-text-input id="ticket_types_standard_available" type="number" name="ticket_types[standard][available_tickets]" :value="old('ticket_types.standard.available_tickets')" class="block mt-1 w-full" required />
+                                        <x-text-input id="ticket_types_standard_available" type="number" name="ticket_types[standard][available_tickets]" placeholder="e.g., 1000" :value="old('ticket_types.standard.available_tickets')" class="block mt-1 w-full" required />
                                         <x-input-error :messages="$errors->get('ticket_types.standard.available_tickets')" class="mt-2" />
                                     </div>
                                 </div>
@@ -122,12 +122,12 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <x-input-label for="ticket_types_premium_price" :value="__('Price (£)')" />
-                                        <x-text-input id="ticket_types_premium_price" type="number" step="0.01" name="ticket_types[premium][price]" :value="old('ticket_types.premium.price')" class="block mt-1 w-full" required />
+                                        <x-text-input id="ticket_types_premium_price" type="number" step="0.01" name="ticket_types[premium][price]" placeholder="e.g., 100.00" :value="old('ticket_types.premium.price')" class="block mt-1 w-full" required />
                                         <x-input-error :messages="$errors->get('ticket_types.premium.price')" class="mt-2" />
                                     </div>
                                     <div>
                                         <x-input-label for="ticket_types_premium_available" :value="__('Available Tickets')" />
-                                        <x-text-input id="ticket_types_premium_available" type="number" name="ticket_types[premium][available_tickets]" :value="old('ticket_types.premium.available_tickets')" class="block mt-1 w-full" required />
+                                        <x-text-input id="ticket_types_premium_available" type="number" name="ticket_types[premium][available_tickets]" placeholder="e.g., 200" :value="old('ticket_types.premium.available_tickets')" class="block mt-1 w-full" required />
                                         <x-input-error :messages="$errors->get('ticket_types.premium.available_tickets')" class="mt-2" />
                                     </div>
                                 </div>
@@ -149,11 +149,14 @@
                         <!-- Description -->
                         <div>
                             <x-input-label for="description" :value="__('Description')" />
-                            <textarea id="description" name="description" rows="3" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">{{ old('description') }}</textarea>
+                            <textarea id="description" name="description" rows="3" placeholder="Enter match description..." class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">{{ old('description') }}</textarea>
                             <x-input-error :messages="$errors->get('description')" class="mt-2" />
                         </div>
 
-                        <div class="flex items-center justify-end mt-4">
+                        <div class="flex items-center justify-between mt-4">
+                            <a href="{{ route('admin.matches.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                ← Back to Matches
+                            </a>
                             <x-primary-button class="ml-4">
                                 {{ __('Create Match') }}
                             </x-primary-button>

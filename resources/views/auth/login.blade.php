@@ -40,6 +40,7 @@
                         id="email"
                         type="email"
                         name="email"
+                        placeholder="Enter your email address"
                         value="{{ old('email') }}"
                         required
                         autofocus
@@ -67,6 +68,7 @@
                         id="password"
                         type="password"
                         name="password"
+                        placeholder="Enter your password"
                         required
                         autocomplete="current-password"
                         class="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"

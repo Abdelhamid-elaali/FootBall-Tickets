@@ -46,6 +46,7 @@
                         id="email" 
                         type="email" 
                         name="email" 
+                        placeholder="Enter your email address"
                         value="{{ old('email') }}"
                         required 
                         autofocus
