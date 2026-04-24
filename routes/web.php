@@ -78,6 +78,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Payment routes
     Route::get('/payment/confirm', [PaymentController::class, 'create'])->name('payment.confirm');
     Route::post('/payment/process', [PaymentController::class, 'store'])->name('payment.store');
+    Route::get('/payment/process', function () {
+        return redirect()->route('payment.confirm')->with('error', 'Please select tickets and confirm your payment first.');
+    });
     Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
     Route::get('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
     

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Routing\Router;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\SuperAdminMiddleware;
+use Illuminate\Pagination\Paginator;
 use App\View\Components\AppLayout;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,5 +31,8 @@ class AppServiceProvider extends ServiceProvider
 
         // Register Blade Components
         Blade::component('app-layout', AppLayout::class);
+
+        // Set default pagination view
+        Paginator::defaultView('vendor.pagination.custom');
     }
 }

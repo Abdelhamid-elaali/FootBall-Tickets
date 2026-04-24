@@ -2,8 +2,8 @@
 
 <div class="relative" x-data="{ open: false }">
     <button @click="open = !open" class="flex items-center space-x-3 hover:bg-opacity-90 hover:bg-gray-300 rounded-full p-2.5 focus:outline-none">
-        <img class="h-8 w-8 rounded-full object-cover border-2 {{ $darkMode ? 'border-gray-600' : 'border-gray-200' }}" 
-             src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}" 
+        <img class="h-9 w-9 rounded-full object-cover border-2 {{ $darkMode ? 'border-gray-600' : 'border-gray-200' }} shadow-sm" 
+             src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&rounded=true&background=059669&color=fff" 
              alt="{{ auth()->user()->name }}">
         <div class="hidden md:flex md:items-center md:space-x-2">
             <span class="text-sm font-medium {{ $darkMode ? 'text-gray-100' : 'text-gray-900' }}">{{ auth()->user()->name }}</span>
