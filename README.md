@@ -84,4 +84,4 @@ We have completely overhauled the user and admin experience with a focus on mode
 Thank you for considering contributing to FootballTix! Please feel free to open issues or submit pull requests.
 
 ## 📄 License
-This project is open-sourced software licensed under the [MIT license](LICENSE).
+This project is open-sourced software licensed under the [GNU GPL v3.0 license](LICENSE).
